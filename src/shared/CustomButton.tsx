@@ -1,4 +1,4 @@
-export const ButtonTip = ({
+export const CustomButton = ({
   onClick,
   children,
 }: {

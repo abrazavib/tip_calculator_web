@@ -6,22 +6,22 @@ export const useTip = () => {
   const [split, setSplit] = useState(1);
 
   const handleTipClicked = async (tip: number) => {
-    console.log(`Tip clicked: ${tip}%`);
+    // console.log(`Tip clicked: ${tip}%`);
     setTip(tip);
   };
 
   const handleIncrementClick = () => {
-    console.log("Increment clicked");
+    // console.log("Increment clicked");
     setSplit((prevSplit) => prevSplit + 1);
   };
 
   const handleDecrementClick = () => {
-    console.log("Decrement clicked");
+    // console.log("Decrement clicked");
     setSplit((prevSplit) => (prevSplit > 1 ? prevSplit - 1 : 1));
   };
 
   const handleBillChange = (bill: number) => {
-    console.log(`Bill changed: $${bill}`);
+    // console.log(`Bill changed: $${bill}`);
     setBill(bill);
   };
 

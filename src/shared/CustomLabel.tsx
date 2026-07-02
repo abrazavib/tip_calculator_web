@@ -1,4 +1,4 @@
-export const LabelView = ({
+export const CustomLabel = ({
   label,
   value,
 }: {
