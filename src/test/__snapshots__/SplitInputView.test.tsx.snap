@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SplitInputView > should match snapshot 1`] = `
+<div>
+  <div
+    class="flex items-center gap-4 p-4"
+  >
+    <div
+      class="pr-4"
+    >
+      <p
+        class="text-lg font-semibold text-orange-500"
+      >
+        Split 
+      </p>
+      <p
+        class="text-base text-orange-500"
+      >
+        the total
+      </p>
+    </div>
+    <button
+      class="border font-sans font-medium text-center transition-all duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed data-[shape=pill]:rounded-full data-[width=full]:w-full focus:shadow-none text-sm rounded-md py-2 px-4 shadow-sm hover:shadow-md bg-slate-800 border-slate-800 text-slate-50 hover:bg-slate-700 hover:border-slate-700"
+    >
+      -
+    </button>
+    <p
+      class="flex w-12 text-lg font-semibold items-center justify-center text-orange-500"
+    >
+      2
+    </p>
+    <button
+      class="border font-sans font-medium text-center transition-all duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed data-[shape=pill]:rounded-full data-[width=full]:w-full focus:shadow-none text-sm rounded-md py-2 px-4 shadow-sm hover:shadow-md bg-slate-800 border-slate-800 text-slate-50 hover:bg-slate-700 hover:border-slate-700"
+    >
+      +
+    </button>
+  </div>
+</div>
+`;
