@@ -1,43 +1,35 @@
-import { CustomHeader } from "./shared/CustomHeader";
-import { BillInput } from "./tip/components/BillInput";
-import { ResultView } from "./tip/components/ResultView";
-import { SplitInputView } from "./tip/components/SplitInputView";
-import { TipInputView } from "./tip/components/TipInputView";
-import { useTip } from "./tip/hooks/useTip";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "./auth/context/AuthContext";
+import { ProtectedRoute } from "./auth/components/ProtectedRoute"; // (Creado en la respuesta anterior)
+import { LoginForm } from "./auth/components/LoginForm";
+import { CalculatorView } from "./tip/components/CalculatorView";
 
 export const TipCalculatorApp = () => {
-  const {
-    split,
-    totalTip,
-    totalAmount,
-    amountPerPerson,
-    handleTipClicked,
-    handleIncrementClick,
-    handleDecrementClick,
-    handleBillChange,
-  } = useTip();
   return (
     <>
-      <div className="rounded-2x1 bg-white shadow-lg pt-8">
-        {/* Header */}
-        <CustomHeader title="Tip" subtitle="Calculator" />
-        {/* Show results */}
-        <ResultView
-          totalTip={totalTip}
-          totalBill={totalAmount}
-          totalPerPerson={amountPerPerson}
-        />
-        {/* Enter your bill amount */}
-        <BillInput handleBillChange={handleBillChange} />
-        {/* Select a tip */}
-        <TipInputView onTipSelected={handleTipClicked} />
-        {/* Split the bill */}
-        <SplitInputView
-          split={split}
-          onIncrementClick={handleIncrementClick}
-          onDecrementClick={handleDecrementClick}
-        />
-      </div>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <div className="min-h-screen flex items-center justify-center bg-slate-100">
+                  <LoginForm />
+                </div>
+              }
+            ></Route>
+            <Route element={<ProtectedRoute />}>
+              {/* Renderizas el componente padre de tu funcionalidad tip */}
+              <Route path="/calculator" element={<CalculatorView />} />
+            </Route>
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/calculator" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 };
+
+export default TipCalculatorApp;
