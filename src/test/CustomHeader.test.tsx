@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
-import { CustomHeader } from "../shared/CustomHeader";
+import { CustomHeader } from "../shared/components/CustomHeader";
 
 describe("CustomHeader", () => {
   test("should render the custom header component", () => {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CustomLabel } from "../../shared/CustomLabel";
+import { CustomLabel } from "../../shared/components/CustomLabel";
 
 interface BillInputProps {
   handleBillChange?: (bill: number) => void;

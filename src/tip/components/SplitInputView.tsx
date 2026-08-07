@@ -1,5 +1,5 @@
-import { CustomButton } from "../../shared/CustomButton";
-import { CustomLabel } from "../../shared/CustomLabel";
+import { CustomButton } from "../../shared/components/CustomButton";
+import { CustomLabel } from "../../shared/components/CustomLabel";
 
 interface SplitInputViewProps {
   split: number;

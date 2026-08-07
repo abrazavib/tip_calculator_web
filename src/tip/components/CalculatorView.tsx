@@ -1,4 +1,4 @@
-import { CustomHeader } from "../../shared/CustomHeader";
+import { CustomHeader } from "../../shared/components/CustomHeader";
 import { BillInput } from "./BillInput";
 import { ResultView } from "./ResultView";
 import { SplitInputView } from "./SplitInputView";
