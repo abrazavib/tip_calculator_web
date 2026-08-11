@@ -1,26 +1,5 @@
 import { apiClient } from "../../shared/api/apiClient";
-
-export interface CategoryGroup {
-  id: string;
-  name: string;
-  description: string | null;
-  colorCode: string;
-  icon: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  description: string | null;
-  colorCode: string;
-  icon: string;
-  categoryGroupId: string;
-  createdAt: string;
-  updatedAt: string;
-  group: CategoryGroup;
-}
+import type { Category, CategoryGroup } from "../types";
 
 export const tipService = {
   getCategories: async () => {

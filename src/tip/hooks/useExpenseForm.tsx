@@ -2,15 +2,13 @@ import { useEffect, useState } from "react";
 import { tipService } from "../services/TipServices";
 import type { Category, CategoryGroup } from "../types";
 
-export interface UseTipOptions {
+export interface UseExpenseFormOptions {
   initialTotalPerPerson?: number;
 }
 
-export const useTip = ({ initialTotalPerPerson }: UseTipOptions = {}) => {
-  const [bill, setBill] = useState(0);
-  const [tip, setTip] = useState(0);
-  const [split, setSplit] = useState(1);
-
+export const useExpenseForm = ({
+  initialTotalPerPerson,
+}: UseExpenseFormOptions = {}) => {
   const [groups, setGroups] = useState<CategoryGroup[]>([]);
   const [groupId, setGroupId] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
@@ -80,38 +78,16 @@ export const useTip = ({ initialTotalPerPerson }: UseTipOptions = {}) => {
     loadCategories();
   }, [groupId]);
 
-  const handleTipClicked = async (tip: number) => {
-    setTip(tip);
+  const handleGroupChange = (selectedGroupId: string) => {
+    setGroupId(selectedGroupId);
   };
 
-  const handleIncrementClick = () => {
-    setSplit((prevSplit) => prevSplit + 1);
+  const handleCategoryChange = (selectedCategoryId: string) => {
+    setCategoryId(selectedCategoryId);
   };
 
-  const handleDecrementClick = () => {
-    setSplit((prevSplit) => (prevSplit > 1 ? prevSplit - 1 : 1));
-  };
-
-  const handleBillChange = (bill: number) => {
-    setBill(bill);
-  };
-
-  const handleReset = () => {
-    setBill(0);
-    setTip(0);
-    setSplit(1);
-  };
-
-  const handleGroupChange = (groupId: string) => {
-    setGroupId(groupId);
-  };
-
-  const handleCategoryChange = (categoryId: string) => {
-    setCategoryId(categoryId);
-  };
-
-  const handleNameChange = (name: string) => {
-    setName(name);
+  const handleNameChange = (value: string) => {
+    setName(value);
   };
 
   const handleSaveExpense = () => {
@@ -129,20 +105,6 @@ export const useTip = ({ initialTotalPerPerson }: UseTipOptions = {}) => {
   };
 
   return {
-    // Tip calculator properties
-    bill,
-    tip,
-    split,
-    totalTip: (bill * tip) / 100,
-    totalAmount: bill + (bill * tip) / 100,
-    amountPerPerson: (bill + (bill * tip) / 100) / split,
-    handleTipClicked,
-    handleIncrementClick,
-    handleDecrementClick,
-    handleBillChange,
-    handleReset,
-
-    // Expense form properties
     groups,
     groupId,
     categories,

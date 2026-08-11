@@ -1,77 +1,27 @@
-import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CustomButton } from "../../shared/components/CustomButton";
 import { CustomLabel } from "../../shared/components/CustomLabel";
-import { tipService } from "../services/TipServices";
-import type { Category, CategoryGroup } from "../services/TipServices";
+import { useExpenseForm } from "../hooks/useExpenseForm";
 
 export const ExpenseFormView = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = (location.state as { totalPerPerson?: number } | null) ?? null;
 
-  const [groups, setGroups] = useState<CategoryGroup[]>([]);
-  const [groupId, setGroupId] = useState<string>("");
-
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [categoryId, setCategoryId] = useState<string>("");
-
-  const [name, setName] = useState("");
-  const [totalPerPerson, setTotalPerPerson] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (state?.totalPerPerson) {
-      setTotalPerPerson(state.totalPerPerson);
-    }
-  }, [state]);
-
-  useEffect(() => {
-    const loadGroups = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const g = await tipService.getGroups();
-        setGroups(g);
-        if (g.length > 0) {
-          setGroupId(g[0].id);
-        }
-      } catch (err) {
-        setError("No se pudieron cargar los grupos.");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadGroups();
-  }, []);
-
-  useEffect(() => {
-    if (!groupId) return;
-
-    const loadCategories = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const data = await tipService.getCategoriesByGroup(groupId);
-        setCategories(data);
-        if (data.length > 0) {
-          setCategoryId(data[0].id);
-        } else {
-          setCategoryId("");
-        }
-      } catch (err) {
-        setError("No se pudieron cargar las categorías.");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadCategories();
-  }, [groupId]);
+  const {
+    groups,
+    groupId,
+    categories,
+    categoryId,
+    name,
+    totalPerPerson,
+    isLoading,
+    error,
+    handleGroupChange,
+    handleCategoryChange,
+    handleNameChange,
+    handleSaveExpense,
+  } = useExpenseForm({ initialTotalPerPerson: state?.totalPerPerson });
 
   return (
     <div className="mx-auto max-w-xl rounded-2x1 bg-white p-8 shadow-lg">
@@ -92,7 +42,7 @@ export const ExpenseFormView = () => {
           <select
             className="w-full rounded-md border border-gray-200 p-3"
             value={groupId}
-            onChange={(e) => setGroupId(e.target.value)}
+            onChange={(e) => handleGroupChange(e.target.value)}
           >
             {groups.map((g) => (
               <option key={g.id} value={g.id}>
@@ -113,7 +63,7 @@ export const ExpenseFormView = () => {
           <select
             className="w-full rounded-md border border-gray-200 p-3"
             value={categoryId}
-            onChange={(event) => setCategoryId(event.target.value)}
+            onChange={(event) => handleCategoryChange(event.target.value)}
           >
             {categories.map((option) => (
               <option key={option.id} value={option.id}>
@@ -131,7 +81,7 @@ export const ExpenseFormView = () => {
           className="w-full rounded-md border border-gray-200 p-2"
           placeholder="Ej. Cena familiar"
           value={name}
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event) => handleNameChange(event.target.value)}
         />
       </div>
 
@@ -147,24 +97,7 @@ export const ExpenseFormView = () => {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <CustomButton onClick={() => navigate(-1)}>Volver</CustomButton>
-        <CustomButton
-          onClick={() => {
-            const selectedCategory = categories.find(
-              (item) => item.id === categoryId,
-            );
-            const selectedGroup = groups.find((g) => g.id === groupId);
-            console.log({
-              groupId,
-              groupName: selectedGroup?.name,
-              categoryId,
-              categoryName: selectedCategory?.name,
-              name,
-              totalPerPerson,
-            });
-          }}
-        >
-          Guardar gasto
-        </CustomButton>
+        <CustomButton onClick={handleSaveExpense}>Guardar gasto</CustomButton>
       </div>
     </div>
   );
