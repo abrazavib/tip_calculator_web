@@ -5,6 +5,7 @@ import { ProtectedRoute } from "./auth/components/ProtectedRoute";
 import { LoginForm } from "./auth/components/LoginForm";
 import { MainLayout } from "./shared/layout/MainLayout";
 import { CalculatorView } from "./tip/components/CalculatorView";
+import { ExpenseFormView } from "./tip/components/ExpenseFormView";
 
 export const TipCalculatorApp = () => {
   return (
@@ -24,6 +25,7 @@ export const TipCalculatorApp = () => {
           <Route element={<ProtectedRoute />}>
             <Route element={<MainLayout />}>
               <Route path="/calculator" element={<CalculatorView />} />
+              <Route path="/expense" element={<ExpenseFormView />} />
               <Route
                 path="/history"
                 element={

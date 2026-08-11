@@ -1,4 +1,4 @@
-import logo from "../assets/icCalculatorBW.png";
+import logo from "../../assets/icCalculatorBW.png";
 
 interface Props {
   title: string;

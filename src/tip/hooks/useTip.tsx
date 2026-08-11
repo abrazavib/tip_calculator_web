@@ -21,6 +21,12 @@ export const useTip = () => {
     setBill(bill);
   };
 
+  const handleReset = () => {
+    setBill(0);
+    setTip(0);
+    setSplit(1);
+  };
+
   return {
     // Properties
     bill,
@@ -36,5 +42,6 @@ export const useTip = () => {
     handleIncrementClick,
     handleDecrementClick,
     handleBillChange,
+    handleReset,
   };
 };
