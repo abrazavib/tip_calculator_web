@@ -19,3 +19,11 @@ export interface Category {
   updatedAt: string;
   group: CategoryGroup;
 }
+
+export interface Source {
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+}

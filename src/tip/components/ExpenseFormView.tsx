@@ -9,6 +9,8 @@ export const ExpenseFormView = () => {
   const state = (location.state as { totalPerPerson?: number } | null) ?? null;
 
   const {
+    sources,
+    sourceId,
     groups,
     groupId,
     categories,
@@ -16,12 +18,21 @@ export const ExpenseFormView = () => {
     name,
     totalPerPerson,
     isLoading,
+    isSaving,
     error,
+    handleSourceChange,
     handleGroupChange,
     handleCategoryChange,
     handleNameChange,
     handleSaveExpense,
   } = useExpenseForm({ initialTotalPerPerson: state?.totalPerPerson });
+
+  const onSaveClick = async () => {
+    const success = await handleSaveExpense();
+    if (success) {
+      navigate("/history");
+    }
+  };
 
   return (
     <div className="mx-auto max-w-xl rounded-2x1 bg-white p-8 shadow-lg">
@@ -33,6 +44,11 @@ export const ExpenseFormView = () => {
           Completa los datos del gasto para guardarlo en tu registro.
         </p>
       </div>
+      {error ? (
+        <div className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-600">
+          {error}
+        </div>
+      ) : null}
 
       <div className="mb-4">
         <CustomLabel label="Grupo" value="Selecciona un grupo" />
@@ -57,8 +73,6 @@ export const ExpenseFormView = () => {
         <CustomLabel label="Categoría" value="Selecciona una opción" />
         {isLoading && categories.length === 0 ? (
           <p className="text-sm text-gray-500">Cargando categorías...</p>
-        ) : error ? (
-          <p className="text-sm text-red-500">{error}</p>
         ) : (
           <select
             className="w-full rounded-md border border-gray-200 p-3"
@@ -68,6 +82,25 @@ export const ExpenseFormView = () => {
             {categories.map((option) => (
               <option key={option.id} value={option.id}>
                 {option.name}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+
+      <div className="mb-4">
+        <CustomLabel label="Origen" value="Selecciona origen del dinero" />
+        {isLoading && sources.length === 0 ? (
+          <p className="text-sm text-gray-500">Cargando origen de dinero...</p>
+        ) : (
+          <select
+            className="w-full rounded-md border border-gray-200 p-3"
+            value={sourceId}
+            onChange={(e) => handleSourceChange(e.target.value)}
+          >
+            {sources.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
               </option>
             ))}
           </select>
@@ -97,7 +130,9 @@ export const ExpenseFormView = () => {
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <CustomButton onClick={() => navigate(-1)}>Volver</CustomButton>
-        <CustomButton onClick={handleSaveExpense}>Guardar gasto</CustomButton>
+        <CustomButton onClick={onSaveClick}>
+          {isSaving ? "Guardando..." : "Guardar gasto"}
+        </CustomButton>
       </div>
     </div>
   );
