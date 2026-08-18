@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import { Calculator, History, User } from "lucide-react";
 
 export const BottomNav = () => {
-  // Configuración centralizada de tus tabs
   const navItems = [
     { path: "/calculator", label: "Tip Calculator", icon: Calculator },
     { path: "/history", label: "History", icon: History },

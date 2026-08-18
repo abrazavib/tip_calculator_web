@@ -35,7 +35,7 @@ export const useLoginForm = () => {
     try {
       const response = await authService.login(data);
       loginSession(response.data.token, 60);
-      navigate("/calculator", { replace: true });
+      navigate("/history", { replace: true });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const errorMessage = error.response.data.error;

@@ -49,6 +49,7 @@ export const CalculatorView = () => {
           onSave={() =>
             navigate("/expense", { state: { totalPerPerson: amountPerPerson } })
           }
+          isSaveDisabled={amountPerPerson <= 0}
         />
       </div>
     </div>
