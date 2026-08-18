@@ -32,8 +32,7 @@ jobs:
         run: npm ci
 
       - name: Análisis de Código (Lint & TypeScript)
-        run: npm run lint
-          npm run typecheck
+        run: npm run lint && npm run typecheck
 
       - name: Ejecutar Pruebas (Vitest)
         run: npm run test:ci
@@ -42,6 +41,9 @@ jobs:
 
       - name: Instalar Vercel CLI
         run: npm install --global vercel@latest
+
+      - name: Limpiar la caché de Vercel
+        run: rm -rf .vercel
 
       - name: Traer configuración de Vercel
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}

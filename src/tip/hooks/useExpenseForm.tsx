@@ -24,12 +24,6 @@ export const useExpenseForm = ({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (initialTotalPerPerson !== undefined) {
-      setTotalPerPerson(initialTotalPerPerson);
-    }
-  }, [initialTotalPerPerson]);
-
-  useEffect(() => {
     const loadSources = async () => {
       setIsLoading(true);
       setError(null);
@@ -74,8 +68,6 @@ export const useExpenseForm = ({
 
   useEffect(() => {
     if (!groupId) {
-      setCategories([]);
-      setCategoryId("");
       return;
     }
 
@@ -110,6 +102,11 @@ export const useExpenseForm = ({
   const handleGroupChange = (selectedGroupId: string) => {
     setError(null);
     setGroupId(selectedGroupId);
+
+    if (!selectedGroupId) {
+      setCategories([]);
+      setCategoryId("");
+    }
   };
 
   const handleCategoryChange = (selectedCategoryId: string) => {

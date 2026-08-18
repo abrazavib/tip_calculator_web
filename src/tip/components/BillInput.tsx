@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CustomLabel } from "../../shared/components/CustomLabel";
 
 interface BillInputProps {
@@ -7,11 +7,9 @@ interface BillInputProps {
 }
 
 export const BillInput = ({ bill = 0, handleBillChange }: BillInputProps) => {
-  const [amount, setAmount] = useState("");
-
-  useEffect(() => {
-    setAmount(bill === 0 ? "" : bill.toString());
-  }, [bill]);
+  const [amount, setAmount] = useState(() =>
+    bill === 0 ? "" : bill.toString(),
+  );
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {

@@ -75,12 +75,12 @@ export const useCreateEntity = (options: UseCreateEntityOptions) => {
     }
   }, [options.entityType]);
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = async () => {
-    let payload: Record<string, any> = {};
+    let payload: GroupPayload | CategoryPayload | SourcePayload;
     switch (options.entityType) {
       case "group": {
         const data = formData as GroupForm;
@@ -95,7 +95,7 @@ export const useCreateEntity = (options: UseCreateEntityOptions) => {
         setError(null);
 
         try {
-          await tipService.createGroup(payload as any);
+          await tipService.createGroup(payload);
         } catch (err) {
           setError("No se pudo crear el grupo. Intenta nuevamente.");
           console.error(err);
@@ -116,7 +116,7 @@ export const useCreateEntity = (options: UseCreateEntityOptions) => {
         setError(null);
 
         try {
-          await tipService.createCategory(payload as any);
+          await tipService.createCategory(payload);
         } catch (err) {
           setError("No se pudo crear la categorpia. Intenta nuevamente.");
           console.error(err);
@@ -134,7 +134,7 @@ export const useCreateEntity = (options: UseCreateEntityOptions) => {
         setError(null);
 
         try {
-          await tipService.createSource(payload as any);
+          await tipService.createSource(payload);
         } catch (err) {
           setError("No se pudo crear el elemento. Intenta nuevamente.");
           console.error(err);
@@ -144,7 +144,7 @@ export const useCreateEntity = (options: UseCreateEntityOptions) => {
         break;
       }
       default:
-        payload = { ...(formData as any) };
+        payload = { name: "" };
     }
     navigate(-1);
   };
