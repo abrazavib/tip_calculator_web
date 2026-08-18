@@ -19,36 +19,35 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
     steps:
-      - name: 1️⃣ Descargar el código
+      - name: Descargar el código
         uses: actions/checkout@v4
 
-      - name: 2️⃣ Configurar Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # Usa la versión de Node de tu proyecto
+          node-version: "24" # Usa la versión de Node de tu proyecto
           cache: "npm"
 
-      - name: 3️⃣ Instalar dependencias
+      - name: Instalar dependencias
         run: npm ci
 
-      - name: 4️⃣ Análisis de Código (Lint & TypeScript)
-        run: |
-          npm run lint
+      - name: Análisis de Código (Lint & TypeScript)
+        run: npm run lint
           npm run typecheck
 
-      - name: 5️⃣ Ejecutar Pruebas (Vitest)
+      - name: Ejecutar Pruebas (Vitest)
         run: npm run test:ci
 
       # --- A PARTIR DE AQUÍ SOLO LLEGA SI LAS PRUEBAS PASARON ---
 
-      - name: 6️⃣ Instalar Vercel CLI
+      - name: Instalar Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: 7️⃣ Traer configuración de Vercel
+      - name: Traer configuración de Vercel
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: 8️⃣ Construir (Build) el Proyecto
+      - name: Construir (Build) el Proyecto
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: 9️⃣ Desplegar a Vercel
+      - name: Desplegar a Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
