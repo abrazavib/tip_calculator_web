@@ -76,7 +76,7 @@ export const CreateEntityView: React.FC<CreateEntityViewProps> = ({ type }) => {
           type="text"
           className="w-full rounded-md border border-gray-200 p-2"
           placeholder={config.namePlaceholder}
-          value={(formData as any).name}
+          value={formData.name}
           onChange={(e) => handleChange("name", e.target.value)}
         />
       </div>
@@ -87,7 +87,9 @@ export const CreateEntityView: React.FC<CreateEntityViewProps> = ({ type }) => {
             label="Grupo"
             placeholder=""
             options={groups.map((g) => ({ id: g.id, name: g.name }))}
-            value={(formData as any).categoryGroupId || ""}
+            value={
+              "categoryGroupId" in formData ? formData.categoryGroupId : ""
+            }
             onChange={(value) => handleChange("categoryGroupId", value)}
             loading={isLoading}
             maxWidth="max-w-sm"
@@ -102,7 +104,7 @@ export const CreateEntityView: React.FC<CreateEntityViewProps> = ({ type }) => {
             className="w-full rounded-md border border-gray-200 p-2"
             placeholder={config.descPlaceholder}
             rows={3}
-            value={(formData as any).description}
+            value={"description" in formData ? formData.description : ""}
             onChange={(e) => handleChange("description", e.target.value)}
           />
         </div>
@@ -114,7 +116,7 @@ export const CreateEntityView: React.FC<CreateEntityViewProps> = ({ type }) => {
           <input
             type="color"
             className="h-10 w-20 rounded-md border border-gray-200 p-1"
-            value={(formData as any).colorCode}
+            value={"colorCode" in formData ? formData.colorCode : "#FFFFFF"}
             onChange={(e) => handleChange("colorCode", e.target.value)}
           />
         </div>

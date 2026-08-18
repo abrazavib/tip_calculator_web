@@ -16,17 +16,9 @@ export const useTip = ({ initialTotalPerPerson }: UseTipOptions = {}) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryId, setCategoryId] = useState("");
   const [name, setName] = useState("");
-  const [totalPerPerson, setTotalPerPerson] = useState(
-    initialTotalPerPerson ?? 0,
-  );
+  const totalPerPerson = initialTotalPerPerson ?? 0;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (initialTotalPerPerson !== undefined) {
-      setTotalPerPerson(initialTotalPerPerson);
-    }
-  }, [initialTotalPerPerson]);
 
   useEffect(() => {
     const loadGroups = async () => {
@@ -52,8 +44,6 @@ export const useTip = ({ initialTotalPerPerson }: UseTipOptions = {}) => {
 
   useEffect(() => {
     if (!groupId) {
-      setCategories([]);
-      setCategoryId("");
       return;
     }
 
@@ -104,6 +94,11 @@ export const useTip = ({ initialTotalPerPerson }: UseTipOptions = {}) => {
 
   const handleGroupChange = (groupId: string) => {
     setGroupId(groupId);
+
+    if (!groupId) {
+      setCategories([]);
+      setCategoryId("");
+    }
   };
 
   const handleCategoryChange = (categoryId: string) => {

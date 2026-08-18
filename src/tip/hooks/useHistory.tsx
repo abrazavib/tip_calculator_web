@@ -55,16 +55,11 @@ export const useHistory = () => {
     loadTransactions();
   }, [currentMonth]);
 
-  useEffect(() => {
-    if (
-      selectedDate.getFullYear() !== currentMonth.getFullYear() ||
-      selectedDate.getMonth() !== currentMonth.getMonth()
-    ) {
-      setSelectedDate(
-        new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1),
-      );
-    }
-  }, [currentMonth, selectedDate]);
+  const selectedDateForMonth =
+    selectedDate.getFullYear() === currentMonth.getFullYear() &&
+    selectedDate.getMonth() === currentMonth.getMonth()
+      ? selectedDate
+      : new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1);
 
   const dayCount = getDaysInMonth(
     currentMonth.getFullYear(),
@@ -81,7 +76,7 @@ export const useHistory = () => {
     }, {});
   }, [transactions]);
 
-  const selectedDayKey = getDateKey(selectedDate);
+  const selectedDayKey = getDateKey(selectedDateForMonth);
   const selectedDayTransactions = monthTransactionsByDate[selectedDayKey] ?? [];
 
   const totalSelectedDay = selectedDayTransactions.reduce(
@@ -134,7 +129,7 @@ export const useHistory = () => {
 
   return {
     currentMonthLabel: formatMonthLabel(currentMonth),
-    selectedDateLabel: formatDayLabel(selectedDate),
+    selectedDateLabel: formatDayLabel(selectedDateForMonth),
     monthDays,
     emptySlots,
     selectedDayTransactions,
