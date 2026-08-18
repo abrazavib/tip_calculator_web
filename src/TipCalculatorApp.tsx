@@ -6,6 +6,8 @@ import { LoginForm } from "./auth/components/LoginForm";
 import { MainLayout } from "./shared/layout/MainLayout";
 import { CalculatorView } from "./tip/components/CalculatorView";
 import { ExpenseFormView } from "./tip/components/ExpenseFormView";
+import { HistoryView } from "./tip/components/HistoryView";
+import { CreateEntityView } from "./tip/components/CreateEntityView";
 
 export const TipCalculatorApp = () => {
   return (
@@ -24,15 +26,21 @@ export const TipCalculatorApp = () => {
           {/* protected routes */}
           <Route element={<ProtectedRoute />}>
             <Route element={<MainLayout />}>
+              <Route index element={<Navigate to="/history" replace />} />
               <Route path="/calculator" element={<CalculatorView />} />
               <Route path="/expense" element={<ExpenseFormView />} />
+              <Route path="/history" element={<HistoryView />} />
               <Route
-                path="/history"
-                element={
-                  <div className="p-8 text-center text-gray-500">
-                    Historial (Próximamente)
-                  </div>
-                }
+                path="/create-group"
+                element={<CreateEntityView type="group" />}
+              />
+              <Route
+                path="/create-category"
+                element={<CreateEntityView type="category" />}
+              />
+              <Route
+                path="/create-source"
+                element={<CreateEntityView type="source" />}
               />
               <Route
                 path="/profile"
@@ -46,7 +54,7 @@ export const TipCalculatorApp = () => {
           </Route>
 
           {/* Fallback */}
-          <Route path="*" element={<Navigate to="/calculator" replace />} />
+          <Route path="*" element={<Navigate to="/history" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

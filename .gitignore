@@ -71,3 +71,5 @@ temp/
 
 # Local Vercel folder
 .vercel/
+.vercel
+.env*

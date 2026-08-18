@@ -122,6 +122,19 @@ export const useExpenseForm = ({
     setName(value);
   };
 
+  const handleTotalPerPersonChange = (value: string | number) => {
+    setError(null);
+    if (typeof value === "number") {
+      setTotalPerPerson(value);
+      return;
+    }
+
+    // Allow values like "12.34" or "$12.34" or "12,34"
+    const cleaned = value.replace(/[^0-9.,-]/g, "").replace(",", ".");
+    const parsed = parseFloat(cleaned);
+    setTotalPerPerson(Number.isFinite(parsed) ? parsed : 0);
+  };
+
   const handleSaveExpense = async () => {
     if (!groupId || !categoryId || !sourceId) {
       setError("Debe seleccionar grupo, categoría y origen.");
@@ -134,7 +147,7 @@ export const useExpenseForm = ({
     }
 
     if (!totalPerPerson || totalPerPerson <= 0) {
-      setError("El total por persona debe ser mayor a 0.");
+      setError("El monto del gasto debe ser mayor a cero.");
       return false;
     }
 
@@ -176,6 +189,7 @@ export const useExpenseForm = ({
     handleGroupChange,
     handleCategoryChange,
     handleNameChange,
+    handleTotalPerPersonChange,
     handleSaveExpense,
   };
 };
